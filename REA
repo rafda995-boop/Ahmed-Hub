@@ -1,0 +1,42 @@
+-- [[ AHMED HUB - OFFICIAL RELEASE ]] --
+-- [[ OWNER: Taraf69788 | @A_K_8_H ]] --
+
+local Kavo = loadstring(game:HttpGet("https://raw.githubusercontent.com/xHeptc/Kavo-UI-Library/main/source.lua"))()
+local Window = Kavo.CreateLib("AHMED HUB | BY TARAF", "DarkTheme")
+
+-- التبويبات الأساسية
+local Main = Window:NewTab("الرئيسية")
+local Destruction = Window:NewTab("التدمير V4")
+local Credits = Window:NewTab("المطور")
+
+-- قسم الوظائف
+local MainSection = Main:NewSection("تحكم اللاعب")
+MainSection:NewSlider("السرعة", "تغيير سرعة اللاعب", 500, 16, function(s)
+    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = s
+end)
+
+-- قسم التدمير (المستخرج من الملف الضخم)
+local DestSection = Destruction:NewSection("خيارات V4")
+DestSection:NewToggle("تفعيل التدمير البصري", "وميض قوي ولاق للسيرفر", function(state)
+    _G.V4_Active = state
+    local Lighting = game:GetService("Lighting")
+    task.spawn(function()
+        while _G.V4_Active do
+            Lighting.Brightness = 10000
+            Lighting.Ambient = Color3.new(math.random(), math.random(), math.random())
+            task.wait(0.01)
+        end
+        Lighting.Brightness = 1
+    end)
+end)
+
+-- قسم الحقوق
+local CreditSection = Credits:NewSection("تطوير: Taraf69788")
+CreditSection:NewButton("نسخ التليجرام: @A_K_8_H", "نسخ المعرف", function()
+    setclipboard("@A_K_8_H")
+end)
+
+-- تشغيل السكربتات المساعدة في الخلفية
+pcall(function()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/bruton-lua-sources/01k/refs/heads/main/Roooooom.lua"))()
+end)
