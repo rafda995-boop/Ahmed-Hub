@@ -1,33 +1,32 @@
--- [[ CLAN ZERO | OFFICIAL SCRIPT ]] --
+-- [[ CLAN ZERO HUB - THE CORE ]] --
 -- حقوق السيطرة الكاملة لـ CLAN ZERO
--- المطور: Taraf69788
 
 local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/xHeptc/Kavo-UI-Library/main/source.lua"))()
--- تغيير العنوان الرئيسي للسكربت
 local Window = Library.CreateLib("CLAN ZERO HUB | BY TARAF", "DarkTheme")
 
--- [ التبويبات ]
-local Main = Window:NewTab("الرئيسية")
-local Section = Main:NewSection("مرحباً بك في Clan Zero")
+-- التبويبات (نفس الموجودة في صورك)
+local Tab1 = Window:NewTab("الحقوق")
+local Tab2 = Window:NewTab("اللاعب")
+local Tab3 = Window:NewTab("المضادات")
+local Tab4 = Window:NewTab("تخريب الماب")
 
--- [ تشغيل المحرك ]
-Section:NewButton("تفعيل المحرك الرئيسي", "تشغيل قوة Clan Zero", function()
-    -- استدعاء ملفك الضخم (المحرك) من حسابك
-    loadstring(game:HttpGet("https://raw.githubusercontent.com/rafda995-boop/Ahmed-Hub/refs/heads/main/MainSource.lua"))()
-    
-    Library:Notify("CLAN ZERO", "تم تفعيل السكربت بنجاح", "rbxassetid://4483345998")
-end)
+-- [ قسم الحقوق - هنا نغير كل شيء ]
+local Section1 = Tab1:NewSection("CLAN ZERO ON TOP")
+Section1:NewLabel("تم تطوير هذا الهب بواسطة Taraf69788")
+Section1:NewLabel("الحقوق محفوظة لـ Clan Zero")
 
--- [ قسم حقوق الكلان ]
-local Credits = Window:NewTab("الحقوق")
-local CredSection = Credits:NewSection("OWNED BY: CLAN ZERO")
-
-CredSection:NewButton("المطور: Taraf69788", "نسخ المعرف", function()
+Section1:NewButton("نسخ حساب تليجرام", "للتواصل مع المطور", function()
     setclipboard("@A_K_8_H")
-    Library:Notify("Clan Zero", "تم نسخ معرف المطور", "rbxassetid://4483345998")
 end)
 
-CredSection:NewLabel("VOID Clan & CLAN ZERO ON TOP")
-
--- إضافة إشعار عند التشغيل
-Library:Notify("Clan Zero Hub", "تم التحميل بواسطة Taraf69788", "rbxassetid://4483345998")
+-- [ قسم تخريب الماب - V4 المستخرج ]
+local Section4 = Tab4:NewSection("خيارات التدمير")
+Section4:NewToggle("تفعيل V4", "وميض وتدمير بصري", function(state)
+    _G.V4 = state
+    while _G.V4 do
+        game:GetService("Lighting").Brightness = 10000
+        game:GetService("Lighting").Ambient = Color3.new(math.random(), math.random(), math.random())
+        task.wait(0.01)
+    end
+    game:GetService("Lighting").Brightness = 1
+end)
