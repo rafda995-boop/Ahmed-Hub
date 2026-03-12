@@ -1,49 +1,57 @@
--- [[ CLAN ZERO HUB - THE CORE ]] --
--- حقوق السيطرة الكاملة لـ CLAN ZERO
+-- [[ CLAN ZERO HUB | THE MAIN SOURCE ]] --
+-- المطور الرئيسي: Taraf69788
+-- الحقوق: Clan Zero (VOID Clan)
 
 local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/xHeptc/Kavo-UI-Library/main/source.lua"))()
 
--- وظيفة لتغيير العناوين الأصلية بالقوة
-local function ChangeCredits()
-    pcall(function()
-        -- استدعاء السكربت الأصلي (المحرك)
-        loadstring(game:HttpGet("https://raw.githubusercontent.com/rafda995-boop/Ahmed-Hub/refs/heads/main/MainSource.lua"))()
-        
-        -- انتظار بسيط لضمان ظهور القائمة ثم تغيير نصوصها
-        task.wait(1)
-        for _, v in pairs(game:GetDescendants()) do
-            if v:IsA("TextLabel") then
-                if v.Text:find("LOC4T") or v.Text:find("BRUTON") then
-                    v.Text = "CLAN ZERO HUB | BY TARAF"
-                end
-            end
-        end
-    end)
-end
-
--- إنشاء الواجهة الخاصة بك
+-- إنشاء الواجهة باسم الكلان مباشرة
 local Window = Library.CreateLib("CLAN ZERO HUB | BY TARAF", "DarkTheme")
 
+-- [ تبويب الحقوق ]
 local Tab1 = Window:NewTab("الحقوق")
 local Section1 = Tab1:NewSection("CLAN ZERO ON TOP")
-Section1:NewLabel("تم تطوير هذا الهب بواسطة Taraf69788")
-Section1:NewLabel("الحقوق محفوظة لـ Clan Zero")
 
--- زر التشغيل الذي سيقوم بتبديل الحقوق
-Section1:NewButton("تشغيل السكربت الكامل", "تفعيل مع تغيير الحقوق", function()
-    ChangeCredits()
-    Library:Notify("CLAN ZERO", "تم تفعيل السكربت وتعديل الحقوق", "rbxassetid://4483345998")
+Section1:NewLabel("تم التطوير بواسطة: Taraf69788")
+Section1:NewLabel("هذا السكربت ملك لـ Clan Zero")
+
+Section1:NewButton("نسخ حساب تليجرام", "للتواصل مع المطور", function()
+    setclipboard("@A_K_8_H")
+    Library:Notify("تم النسخ", "معرف Taraf69788 منسوخ الآن", "rbxassetid://4483345998")
 end)
 
--- قسم التدمير
-local Tab4 = Window:NewTab("تخريب الماب")
-local Section4 = Tab4:NewSection("خيارات التدمير")
-Section4:NewToggle("تفعيل V4", "وميض وتدمير بصري", function(state)
-    _G.V4 = state
-    while _G.V4 do
-        game:GetService("Lighting").Brightness = 10000
-        game:GetService("Lighting").Ambient = Color3.new(math.random(), math.random(), math.random())
-        task.wait(0.01)
-    end
-    game:GetService("Lighting").Brightness = 1
+-- [ تبويب اللاعب ]
+local Tab2 = Window:NewTab("اللاعب")
+local Section2 = Tab2:NewSection("تعديلات الشخصية")
+
+Section2:NewSlider("السرعة", "تغيير سرعة المشي", 500, 16, function(s)
+    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = s
 end)
+
+Section2:NewSlider("القفز", "تغيير قوة القفز", 500, 50, function(s)
+    game.Players.LocalPlayer.Character.Humanoid.JumpPower = s
+end)
+
+-- [ تبويب تخريب الماب ]
+local Tab3 = Window:NewTab("تخريب الماب")
+local Section3 = Tab3:NewSection("خيارات تدمير السيرفر V4")
+
+Section3:NewToggle("تفعيل التدمير البصري (V4)", "وميض قوي ولاق للسيرفر", function(state)
+    _G.V4_Active = state
+    local Lighting = game:GetService("Lighting")
+    task.spawn(function()
+        while _G.V4_Active do
+            Lighting.Brightness = 10000
+            Lighting.Ambient = Color3.new(math.random(), math.random(), math.random())
+            Lighting.OutdoorAmbient = Color3.new(math.random(), math.random(), math.random())
+            task.wait(0.01)
+        end
+        Lighting.Brightness = 1 -- إعادة الإضاءة للطبيعة عند الإيقاف
+    end)
+end)
+
+-- [ تشغيل السكربتات المساعدة تلقائياً ]
+pcall(function()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/bruton-lua-sources/01k/refs/heads/main/Roooooom.lua"))()
+end)
+
+Library:Notify("Clan Zero", "تم تشغيل هب الكلان بنجاح", "rbxassetid://4483345998")
