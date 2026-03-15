@@ -1,5 +1,5 @@
 wait(0.2)
-shared.LoaderTitle = "「 تابعني تيك يوزري تيك @morfin_090 」";
+shared.LoaderTitle = "「 تابعني تيك يوزري تيك @sdf_a7 」";
 shared.LoaderKeyFrames = {
     [1] = {1, 10},
     [2] = {2, 30},
@@ -287,17 +287,17 @@ local function ShowNoti(title, text, userId)
     })
 end
 
-ShowNoti("System", "مطور سكربت نعم نعم مورففن", 7491686172)
+ShowNoti("System", "مطور سكربت نعم نعم وايت", 7491686172)
 
 task.delay(10, function()
-    ShowNoti("System", "شرايك بتحديث الافصل ؟", 7491686172)
+    ShowNoti("System", "شرايك بتحديث الافصل ؟ يجنن تم اختراق سكربت", 7491686172)
 end)
 
 local redzlib = loadstring(game:HttpGet("https://pastefy.app/jt2TVdeJ/raw"))()
 local Window = redzlib:MakeWindow({
-    Title = "Darkit",
+    Title = "Zero",
     SubTitle = "                       |  0.1V",
-    SaveFolder = "تم التطوير"
+    SaveFolder = "تم التطوير وايت"
 })
 
 Window:AddMinimizeButton({
@@ -313,7 +313,7 @@ local InfoTab = Window:MakeTab({ Title = "حـقوق", Icon = "rbxassetid://7710
 
 
 InfoTab:AddSection({ "معلومات السكربت" })
-InfoTab:AddParagraph({ "المالك / المطور:", "MORFIN" })
+InfoTab:AddParagraph({ "المالك / المطور:", "WAET" })
 InfoTab:AddParagraph({"اضافات:", "مميزات قوية مثل فلنق الادمن"})
 InfoTab:AddButton({": ", function()
 loadstring(game:HttpGet("https://raw.githubusercontent.com/muskarnu/Projects/main/DemoNtr.txt"))()
