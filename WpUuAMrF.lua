@@ -1,10 +1,7 @@
 --[[
-    ZERO Hub. | v. 1.2 - 2026 (OFFICIAL VERSION)
-    المميزات:
-    1- واجهة فائقة العرض (600px) بخطوط نظيفة واحترافية.
-    2- سرعة بانق خارقة (50) مع مسميات: (مص) و (اغتصاب).
-    3- نظام إشعارات التحميل (انتظار -> تفعيل).
-    4- منع الطيران (Anti-Fling) وتصفير السرعة عند الإيقاف.
+    CLAN ZERO Hub. | v. 1.2 - 2026 (OFFICIAL VERSION)
+    Rights: Clan Zero (VOID Clan)
+    Developer: Ahmed (Taraf69788)
 ]]
 
 local Players = game:GetService("Players")
@@ -12,18 +9,18 @@ local RunService = game:GetService("RunService")
 local StarterGui = game:GetService("StarterGui")
 local lp = Players.LocalPlayer
 
--- [ 1. نظام إشعارات التحميل والبدء ]
+-- [ 1. نظام إشعارات كلان زيرو ]
 StarterGui:SetCore("SendNotification", {
-    Title = "ZERO Hub v. 1.2",
-    Text = "انتظر تفعيل السكربت...",
+    Title = "Clan Zero Hub",
+    Text = "جاري تفعيل أنظمة الكلان...",
     Duration = 3
 })
 
-task.wait(2.5) -- تأخير بسيط للتحميل
+task.wait(2.5)
 
 StarterGui:SetCore("SendNotification", {
-    Title = "ZERO Hub v. 1.2",
-    Text = "تم تفعيل السكربت بنجاح ✅",
+    Title = "Clan Zero Hub",
+    Text = "تم التفعيل بنجاح ✅ - أهلاً بك يا أحمد",
     Duration = 3
 })
 
@@ -48,7 +45,7 @@ local function notify(title, text)
     end
 end
 
--- [ تصفير السرعة لمنع الطيران ]
+-- [ تصفير السرعة لمنع الطيران - نظام حماية ]
 local function resetVel()
     if lp.Character and lp.Character:FindFirstChild("HumanoidRootPart") then
         local hrp = lp.Character.HumanoidRootPart
@@ -64,12 +61,12 @@ local function getStats(name)
     return statsData[name]
 end
 
--- [ 4. محرك الحركة - السرعة الخارقة 50 ]
+-- [ 4. محرك الحركة المطور - سرعة 50 ]
 RunService.Heartbeat:Connect(function()
     if (faceSitEnabled or bangEnabled) and bangTarget and bangTarget.Character and bangTarget.Character:FindFirstChild("HumanoidRootPart") then
         local hrp = lp.Character.HumanoidRootPart
-        local move = math.sin(tick() * 50) * 0.9 -- السرعة الخارقة
-        hrp.Velocity = Vector3.zero
+        local move = math.sin(tick() * 50) * 0.9 -- السرعة الخارقة 50
+        hrp.Velocity = Vector3.new(0, 0.0001, 0) -- منع السقوط من خلال الأرض
         
         if faceSitEnabled and bangTarget.Character:FindFirstChild("Head") then
             lp.Character.Humanoid.Sit = true
@@ -81,16 +78,16 @@ RunService.Heartbeat:Connect(function()
     end
 end)
 
--- [ 5. الواجهة الرسومية Ultra Wide ]
+-- [ 5. الواجهة الرسومية Clan Zero Edition ]
 local MainGui = Instance.new("ScreenGui", lp.PlayerGui); MainGui.ResetOnSpawn = false
 local MainFrame = Instance.new("Frame", MainGui)
 MainFrame.Size = UDim2.new(0, 600, 0, 480)
 MainFrame.Position = UDim2.new(0.5, -300, 0.25, 0) 
-MainFrame.BackgroundColor3 = DarkPurple; MainFrame.BackgroundTransparency = 0.4; MainFrame.Active = true; MainFrame.Draggable = true; MainFrame.ClipsDescendants = true
+MainFrame.BackgroundColor3 = DarkPurple; MainFrame.BackgroundTransparency = 0.2; MainFrame.Active = true; MainFrame.Draggable = true; MainFrame.ClipsDescendants = true
 Instance.new("UIStroke", MainFrame).Color = Color3.fromRGB(180, 50, 255)
 
 local Title = Instance.new("TextLabel", MainFrame)
-Title.Size = UDim2.new(1, 0, 0, 50); Title.BackgroundColor3 = DarkPurple; Title.Text = "RW Hub. | v. 1.2"; Title.TextColor3 = Color3.new(1, 1, 1); Title.Font = MainFont; Title.TextSize = 20
+Title.Size = UDim2.new(1, 0, 0, 50); Title.BackgroundColor3 = DarkPurple; Title.Text = "CLAN ZERO HUB | OFFICIAL"; Title.TextColor3 = Color3.new(1, 1, 1); Title.Font = MainFont; Title.TextSize = 20
 
 local Arrow = Instance.new("TextButton", MainFrame)
 Arrow.Size = UDim2.new(0, 50, 0, 50); Arrow.Position = UDim2.new(1, -50, 0, 0); Arrow.Text = "▲"; Arrow.BackgroundTransparency = 1; Arrow.TextColor3 = Color3.new(1, 1, 1); Arrow.TextSize = 25
@@ -108,7 +105,7 @@ local function createTab(name, pos)
     btn.Text = name; btn.TextColor3 = Color3.new(1, 1, 1); btn.BackgroundTransparency = 0.9; btn.Font = MainFont; btn.TextSize = 14; return btn
 end
 
-local FunBtn = createTab("المتعة", 0); local TrackBtn = createTab("التتبع", 1); local SetBtn = createTab("الإعدادات", 2); local ScBtn = createTab("السكربتات", 3)
+local FunBtn = createTab("الأنظمة", 0); local TrackBtn = createTab("التتبع", 1); local SetBtn = createTab("الإعدادات", 2); local ScBtn = createTab("كلان زيرو", 3)
 local FunFrame = Instance.new("Frame", Content); FunFrame.Size = UDim2.new(1,0,1,0); FunFrame.BackgroundTransparency = 1; FunFrame.Visible = true
 local TrackFrame = Instance.new("ScrollingFrame", Content); TrackFrame.Size = UDim2.new(1,0,1,0); TrackFrame.BackgroundTransparency = 1; TrackFrame.Visible = false; TrackFrame.CanvasSize = UDim2.new(0,0,4,0)
 local SetFrame = Instance.new("Frame", Content); SetFrame.Size = UDim2.new(1,0,1,0); SetFrame.BackgroundTransparency = 1; SetFrame.Visible = false
@@ -139,7 +136,7 @@ local function createBigBtn(parent, text, pos, callback)
     btn.MouseButton1Click:Connect(function() callback(btn) end); return btn
 end
 
--- [ محتوى المتعة ]
+-- [ محتوى الأنظمة ]
 local TargetInput = Instance.new("TextBox", FunFrame); TargetInput.Size = UDim2.new(1, -40, 0, 45); TargetInput.Position = UDim2.new(0, 20, 0, 10); TargetInput.PlaceholderText = "يوزر الضحية..."; TargetInput.BackgroundColor3 = MutedPurple; TargetInput.TextColor3 = Color3.new(1,1,1); TargetInput.Font = MainFont; TargetInput.TextSize = 16; Instance.new("UICorner", TargetInput)
 local PreviewFrame = Instance.new("Frame", FunFrame); PreviewFrame.Size = UDim2.new(1, -40, 0, 70); PreviewFrame.Position = UDim2.new(0, 20, 0, 65); PreviewFrame.BackgroundColor3 = MutedPurple; PreviewFrame.BackgroundTransparency = 0.8; PreviewFrame.Visible = false; Instance.new("UICorner", PreviewFrame)
 local TargetImg = Instance.new("ImageLabel", PreviewFrame); TargetImg.Size = UDim2.new(0, 60, 0, 60); TargetImg.Position = UDim2.new(0, 5, 0, 5); Instance.new("UICorner", TargetImg).CornerRadius = UDim.new(1,0)
@@ -159,7 +156,7 @@ TargetInput:GetPropertyChangedSignal("Text"):Connect(function()
 end)
 
 local btnMos, btnEgh
-btnMos = createBigBtn(FunFrame, "مص", 150, function(btn)
+btnMos = createBigBtn(FunFrame, "تثبيت الرأس (خاص)", 150, function(btn)
     if foundPlayer then
         faceSitEnabled = not faceSitEnabled; bangEnabled = false; bangTarget = faceSitEnabled and foundPlayer or nil
         btn.BackgroundColor3 = faceSitEnabled and ActiveGreen or MutedPurple
@@ -168,7 +165,7 @@ btnMos = createBigBtn(FunFrame, "مص", 150, function(btn)
     end
 end)
 
-btnEgh = createBigBtn(FunFrame, "اغتصاب", 225, function(btn)
+btnEgh = createBigBtn(FunFrame, "مطاردة سريعة (50)", 225, function(btn)
     if foundPlayer then
         bangEnabled = not bangEnabled; faceSitEnabled = false; bangTarget = bangEnabled and foundPlayer or nil
         btn.BackgroundColor3 = bangEnabled and ActiveGreen or MutedPurple
@@ -178,16 +175,16 @@ btnEgh = createBigBtn(FunFrame, "اغتصاب", 225, function(btn)
 end)
 
 -- [ الإعدادات ]
-createBigBtn(SetFrame, "كتم الإشعارات: معطل", 15, function(btn)
+createBigBtn(SetFrame, "كتم إشعارات الكلان: معطل", 15, function(btn)
     notificationsMuted = not notificationsMuted
-    btn.Text = notificationsMuted and "كتم الإشعارات: مفعل ✅" or "كتم الإشعارات: معطل"
+    btn.Text = notificationsMuted and "كتم إشعارات الكلان: مفعل ✅" or "كتم إشعارات الكلان: معطل"
     btn.BackgroundColor3 = notificationsMuted and ActiveGreen or MutedPurple
 end)
-createBigBtn(SetFrame, "إغلاق السكربت نهائياً", 90, function() notify("RW Hub", "لقد أغلقت السكربت"); task.wait(0.3); MainGui:Destroy() end)
+createBigBtn(SetFrame, "تدمير واجهة كلان زيرو", 90, function() notify("Clan Zero", "تم إغلاق الواجهة"); task.wait(0.3); MainGui:Destroy() end)
 
 -- [ رصد اللاعبين ]
 local function mon(p)
-    if p ~= lp then notify("دخول لاعب", p.Name .. " دخل السيرفر") end
+    if p ~= lp then notify("كلان زيرو: دخول", p.Name .. " دخل السيرفر") end
     local s = getStats(p.Name)
     s.thumb = Players:GetUserThumbnailAsync(p.UserId, Enum.ThumbnailType.HeadShot, Enum.ThumbnailSize.Size150x150)
     p.CharacterAdded:Connect(function(c) 
@@ -199,7 +196,7 @@ end
 
 Players.PlayerAdded:Connect(mon)
 Players.PlayerRemoving:Connect(function(p)
-    notify("خروج لاعب", p.Name .. " غادر السيرفر")
+    notify("كلان زيرو: خروج", p.Name .. " غادر السيرفر")
     getStats(p.Name).leaves = getStats(p.Name).leaves + 1
     updateTracker()
 end)
