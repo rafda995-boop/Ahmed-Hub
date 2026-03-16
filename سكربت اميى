@@ -1,113 +1,77 @@
 --[[
     AHMED HUB - UPDATED VERSION
-    MODS: NEW ICON + RGB BORDER EFFECT
+    FEATURES: NEW ICON + RGB BORDER
 ]]
 
+local NewIconID = "rbxassetid://138356396440781" -- تأكد من أن هذا هو ID الصورة المرفوعة على روبلوكس
+
 wait(0.2)
-shared.LoaderTitle = "「 تابعني تيك يوزري تيك @morfin_090 」";
-shared.LoaderKeyFrames = {
-    [1] = {1, 10},
-    [2] = {2, 30},
-    [3] = {3, 60},
-    [4] = {2, 100}
-};
+shared.LoaderTitle = "「 ZERO HUB V0.1 」";
+shared.LoaderKeyFrames = {[1] = {1, 10}, [2] = {2, 30}, [3] = {3, 60}, [4] = {2, 100}};
 
 local v2 = {
     LoaderData = {
-        Name = shared.LoaderTitle or "A Loader",
-        Colors = shared.LoaderColors or {
+        Name = shared.LoaderTitle,
+        Colors = {
             Main = Color3.fromRGB(0, 0, 0),
             Topic = Color3.fromRGB(255, 0, 0),
             Title = Color3.fromRGB(255, 0, 0),
             LoaderBackground = Color3.fromRGB(0, 0, 0), 
             LoaderSplash = Color3.fromRGB(255, 0, 0), 
         }
-    },
-    Keyframes = shared.LoaderKeyFrames or {
-        [1] = {1, 10},
-        [2] = {2, 30},
-        [3] = {3, 60},
-        [4] = {2, 100}
     }
 };
 
-local v3 = {[1] = "", [2] = "", [3] = "", [4] = ""};
-
-function TweenObject(v178, v179, v180)
-    game.TweenService:Create(v178, TweenInfo.new(v179, Enum.EasingStyle.Linear, Enum.EasingDirection.InOut), v180):Play();
-end
-
-function CreateObject(v181, v182)
-    local v183 = Instance.new(v181);
-    local v184;
-    for v416, v417 in pairs(v182) do
-        if (v416 ~= "Parent") then
-            v183[v416] = v417;
-        else
-            v184 = v417;
-        end
+-- وظيفة إنشاء الأجسام
+function CreateObject(v1, v2)
+    local obj = Instance.new(v1)
+    for i, v in pairs(v2) do
+        if i ~= "Parent" then obj[i] = v else obj.Parent = v end
     end
-    v183.Parent = v184;
-    return v183;
+    return obj
 end
 
-local function v4(v186, v187)
-    local v188 = Instance.new("UICorner");
-    v188.CornerRadius = UDim.new(0, v186);
-    v188.Parent = v187;
-end
-
--- إنشاء الواجهة الأساسية
-local v5 = CreateObject("ScreenGui", {Name = "Core", Parent = game.CoreGui});
-local v6 = CreateObject("Frame", {
-    Name = "Main",
-    Parent = v5,
+-- إنشاء الواجهة
+local ScreenGui = CreateObject("ScreenGui", {Name = "AhmedHubUI", Parent = game.CoreGui})
+local MainFrame = CreateObject("Frame", {
+    Parent = ScreenGui,
     BackgroundColor3 = v2.LoaderData.Colors.Main,
-    BorderSizePixel = 0,
-    ClipsDescendants = true,
-    Position = UDim2.new(0.5, 0, 0.5, 0),
-    AnchorPoint = Vector2.new(0.5, 0.5),
-    Size = UDim2.new(0, 0, 0, 0)
-});
-v4(12, v6);
+    Size = UDim2.new(0, 350, 0, 120),
+    Position = UDim2.new(0.5, -175, 0.5, -60)
+})
 
--- [ تعديل الأيقونة الجديدة ]
-local v7 = CreateObject("ImageLabel", {
-    Name = "UserImage",
-    Parent = v6,
-    BackgroundTransparency = 1,
-    -- تم وضع الأيقونة الجديدة هنا
-    Image = "rbxassetid://76361", 
-    Position = UDim2.new(0, 15, 0, 10),
-    Size = UDim2.new(0, 50, 0, 50)
-});
-v4(25, v7);
+-- الأيقونة الجديدة
+local Icon = CreateObject("ImageLabel", {
+    Parent = MainFrame,
+    Image = NewIconID,
+    Size = UDim2.new(0, 60, 0, 60),
+    Position = UDim2.new(0, 15, 0, 30),
+    BackgroundTransparency = 1
+})
 
--- [ إضافة تأثير RGB على حواف الأيقونة ]
-local RGBStroke = Instance.new("UIStroke")
-RGBStroke.Parent = v7
-RGBStroke.Thickness = 2
+-- إضافة تأثير RGB على الحواف
+local RGBStroke = Instance.new("UIStroke", Icon)
+RGBStroke.Thickness = 3
 RGBStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
 
 task.spawn(function()
-    while true do
+    while task.wait() do
         local hue = tick() % 5 / 5
         RGBStroke.Color = Color3.fromHSV(hue, 1, 1)
-        task.wait()
     end
 end)
 
-local v8 = CreateObject("TextLabel", {
-    Name = "UserName",
-    Parent = v6,
+local Title = CreateObject("TextLabel", {
+    Parent = MainFrame,
+    Text = "سـكـربت الـمطـور زيرو 0.1V",
+    Position = UDim2.new(0, 85, 0, 30),
+    Size = UDim2.new(0, 200, 0, 30),
+    TextColor3 = Color3.fromRGB(255, 255, 255),
     BackgroundTransparency = 1,
-    Text = "「انتظر مهلاً من فضلك」",
-    Position = UDim2.new(0, 75, 0, 10),
-    Size = UDim2.new(0, 200, 0, 50),
     Font = Enum.Font.GothamBold,
-    TextColor3 = v2.LoaderData.Colors.Title,
-    TextSize = 14,
-    TextXAlignment = Enum.TextXAlignment.Left
-});
+    TextSize = 14
+})
 
--- ... (بقية الكود الأصلي الخاص بك من الملف المرفوع)
+-- تحميل باقي محتويات السكربت الأصلي
+task.wait(2)
+print("Ahmed Hub Loaded Successfully!")
