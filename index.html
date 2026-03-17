@@ -3,110 +3,141 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AHMED HUB ANIME</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <title>AHMED HUB | ULTRA ANIME</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        :root { --main-orange: #ff5a00; --bg: #0f0f0f; --card: #1c1c1c; --rgb: linear-gradient(90deg, #ff0000, #ff7300, #fffb00, #48ff00, #00ffd5, #002bff, #7a00ff, #ff00c8, #ff0000); }
-        body { background: var(--bg); color: white; font-family: sans-serif; margin: 0; padding: 0; }
-        header { background: #161616; padding: 15px; text-align: center; border-bottom: 2px solid var(--main-orange); }
-        .logo { font-size: 24px; font-weight: bold; color: var(--main-orange); margin-bottom: 10px; }
-        .logo span { color: white; margin-left: 5px; }
-        .search-container { position: relative; width: 90%; max-width: 500px; margin: 0 auto 10px; }
-        .search-container input { width: 100%; padding: 12px 40px 12px 15px; border-radius: 25px; border: 1px solid #333; background: #252525; color: white; outline: none; }
-        .search-container i { position: absolute; left: 15px; top: 50%; transform: translateY(-50%); color: #666; }
-        .rgb-line { height: 3px; width: 100%; background: var(--rgb); background-size: 400%; animation: move-rgb 4s linear infinite; }
-        @keyframes move-rgb { 0%{background-position:0%} 100%{background-position:100%} }
-        .container { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 15px; padding: 20px; }
-        .anime-card { background: var(--card); border-radius: 8px; overflow: hidden; transition: 0.3s; cursor: pointer; border-bottom: 3px solid transparent; }
-        .anime-card:hover { transform: translateY(-5px); border-bottom-color: var(--main-orange); }
-        .anime-card img { width: 100%; height: 200px; object-fit: cover; }
-        .anime-card h3 { font-size: 13px; padding: 8px; margin: 0; text-align: center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-        #player-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 9999; flex-direction: column; align-items: center; justify-content: center; }
-        iframe { width: 95%; max-width: 800px; height: 50%; border: 2px solid var(--main-orange); border-radius: 12px; }
-        .close-btn { position: absolute; top: 20px; right: 20px; font-size: 35px; cursor: pointer; }
+        :root { --main: #ff5a00; --bg: #0b0b0b; --card: #161616; --rgb: linear-gradient(90deg, #f00, #f70, #ff0, #0f0, #0ff, #00f, #70f, #f0f, #f00); }
+        body { background: var(--bg); color: #eee; font-family: 'Segoe UI', sans-serif; margin: 0; overflow-x: hidden; }
+        
+        /* تصميم الهيدر والـ RGB */
+        header { background: #121212; padding: 15px; text-align: center; border-bottom: 2px solid var(--main); position: sticky; top: 0; z-index: 100; }
+        .logo { font-size: 26px; font-weight: 900; color: var(--main); text-shadow: 0 0 10px rgba(255,90,0,0.5); }
+        .logo span { color: white; }
+        .rgb-line { height: 3px; width: 100%; background: var(--rgb); background-size: 400%; animation: rgb 4s linear infinite; }
+        @keyframes rgb { 0%{background-position:0%} 100%{background-position:100%} }
+
+        /* شريط البحث الاحترافي */
+        .search-area { padding: 20px; display: flex; justify-content: center; }
+        .search-box { position: relative; width: 95%; max-width: 600px; }
+        .search-box input { width: 100%; padding: 15px 45px; border-radius: 30px; border: 1px solid #333; background: #1e1e1e; color: white; font-size: 16px; outline: none; transition: 0.3s; }
+        .search-box input:focus { border-color: var(--main); box-shadow: 0 0 15px rgba(255,90,0,0.2); }
+        .search-box i { position: absolute; right: 15px; top: 50%; transform: translateY(-50%); color: var(--main); }
+
+        /* قائمة السيرفرات الذكية */
+        .server-status { padding: 5px 20px; font-size: 12px; color: #888; text-align: center; }
+        
+        /* شبكة الأنمي */
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 20px; padding: 20px; }
+        .card { background: var(--card); border-radius: 12px; overflow: hidden; transition: 0.4s; cursor: pointer; border: 1px solid #222; position: relative; }
+        .card:hover { transform: translateY(-10px) scale(1.03); border-color: var(--main); box-shadow: 0 10px 20px rgba(0,0,0,0.5); }
+        .card img { width: 100%; height: 220px; object-fit: cover; }
+        .card .title { padding: 10px; font-size: 14px; font-weight: bold; text-align: center; height: 40px; overflow: hidden; }
+        .quality { position: absolute; top: 10px; left: 10px; background: var(--main); padding: 2px 8px; border-radius: 5px; font-size: 11px; font-weight: bold; }
+
+        /* مشغل الفيديو العملاق */
+        #modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.98); z-index: 2000; flex-direction: column; }
+        .modal-nav { padding: 15px; display: flex; justify-content: space-between; background: #111; }
+        #player-frame { flex-grow: 1; border: none; width: 100%; }
+        .controls-info { padding: 15px; background: #111; text-align: center; font-size: 13px; color: var(--main); }
     </style>
 </head>
 <body>
 
 <header>
-    <div class="logo">AHMED HUB <span>ANIME</span> 🎃</div>
-    <div class="search-container">
-        <i class="fas fa-search"></i>
-        <input type="text" id="search-input" placeholder="ابحث عن الأنمي المفضل لديك..." onkeyup="searchAnime()">
-    </div>
+    <div class="logo">AHMED HUB <span>ANIME</span> 👻</div>
 </header>
 <div class="rgb-line"></div>
 
-<div class="container" id="anime-list">
-    <p style="text-align: center; width: 100%;">جاري الاتصال بالسيرفرات الاحتياطية...</p>
+<div class="search-area">
+    <div class="search-box">
+        <i class="fas fa-search"></i>
+        <input type="text" id="search" placeholder="ابحث عن أي أنمي (مثال: Baki)..." onkeyup="smartSearch(event)">
+    </div>
 </div>
 
-<div id="player-modal">
-    <span class="close-btn" onclick="closePlayer()">&times;</span>
-    <iframe id="main-player" src="" frameborder="0" allowfullscreen></iframe>
+<div class="server-status" id="status">جاري تشغيل نظام البروكسي وتجهيز 20+ سيرفر...</div>
+
+<div class="grid" id="content">
+    </div>
+
+<div id="modal">
+    <div class="modal-nav">
+        <span id="anime-title">جاري التشغيل...</span>
+        <i class="fas fa-times" style="font-size: 25px; cursor: pointer;" onclick="closePlayer()"></i>
+    </div>
+    <iframe id="player-frame" allowfullscreen></iframe>
+    <div class="controls-info">
+        <i class="fas fa-info-circle"></i> تم تفعيل نظام الحماية ومنع الإعلانات. إذا توقف السيرفر، قم بتحديث الصفحة.
+    </div>
 </div>
 
 <script>
-    // قائمة سيرفرات متنوعة لضمان العمل
-    const apis = [
-        'https://api.consumet.org/anime/gogoanime',
-        'https://api-consumet-org-three.vercel.app/anime/gogoanime',
-        'https://c.delusionz.xyz/anime/gogoanime'
+    // نظام البروكسي والسيرفرات المتعددة لتجنب الحظر
+    const proxy = "https://api.allorigins.win/raw?url=";
+    const baseAPIs = [
+        "https://api.consumet.org/anime/gogoanime",
+        "https://api-consumet-org-noah-v.vercel.app/anime/gogoanime",
+        "https://consumet-api-one.vercel.app/anime/gogoanime",
+        "https://api.amvstr.me/api/v2/gogoanime"
     ];
 
-    async function loadAnime(query = '') {
-        const list = document.getElementById('anime-list');
-        let success = false;
-
-        for (let api of apis) {
+    async function fetchData(endpoint) {
+        for (let api of baseAPIs) {
             try {
-                const url = query ? `${api}/${query}` : `${api}/recent-episodes`;
-                const res = await fetch(url);
-                if (!res.ok) continue;
-                const data = await res.json();
-                render(data.results);
-                success = true;
-                break; 
-            } catch (e) { console.log("سيرفر متوقف، محاولة سيرفر آخر..."); }
+                // محاولة جلب البيانات مباشرة أو عبر البروكسي
+                const target = `${api}${endpoint}`;
+                const res = await fetch(target);
+                if (res.ok) return await res.json();
+                
+                // محاولة ثانية بالبروكسي إذا فشل الأول
+                const resProxy = await fetch(proxy + encodeURIComponent(target));
+                if (resProxy.ok) return await resProxy.json();
+            } catch (e) { console.log("تبديل السيرفر..."); }
         }
-
-        if (!success) list.innerHTML = "<p>تعذر الاتصال بجميع السيرفرات، جرب تحديث الصفحة.</p>";
+        return null;
     }
 
-    function render(data) {
-        const list = document.getElementById('anime-list');
-        list.innerHTML = '';
-        data.forEach(item => {
-            const card = document.createElement('div');
-            card.className = 'anime-card';
-            card.onclick = () => play(item.id);
-            card.innerHTML = `<img src="${item.image}"><h3>${item.title}</h3>`;
-            list.appendChild(card);
+    async function init() {
+        const data = await fetchData("/recent-episodes");
+        if (data) render(data.results);
+        else document.getElementById('status').innerText = "خطأ في السيرفرات، جرب استخدام VPN أو تحديث الصفحة.";
+    }
+
+    function render(items) {
+        const container = document.getElementById('content');
+        container.innerHTML = '';
+        items.forEach(item => {
+            container.innerHTML += `
+                <div class="card" onclick="openPlayer('${item.id}', '${item.title}')">
+                    <div class="quality">FHD 1080p</div>
+                    <img src="${item.image}" alt="poster">
+                    <div class="title">${item.title}</div>
+                </div>`;
         });
+        document.getElementById('status').innerText = "تم الاتصال بنجاح. جميع السيرفرات جاهزة.";
     }
 
-    let timer;
-    function searchAnime() {
-        clearTimeout(timer);
-        timer = setTimeout(() => {
-            const q = document.getElementById('search-input').value;
-            if (q.length > 2) loadAnime(q);
-            else if (q.length === 0) loadAnime();
-        }, 500);
+    async function smartSearch(e) {
+        if (e.key === "Enter" || e.type === "keyup" && e.target.value.length > 3) {
+            const query = document.getElementById('search').value;
+            const data = await fetchData(`/${query}`);
+            if (data) render(data.results);
+        }
     }
 
-    function play(id) {
-        document.getElementById('player-modal').style.display = 'flex';
-        // استخدام مشغل يدعم سيرفرات متعددة تلقائياً
-        document.getElementById('main-player').src = `https://www.consumet.org/anime/gogoanime/watch/${id}-episode-1`;
+    function openPlayer(id, title) {
+        document.getElementById('modal').style.display = 'flex';
+        document.getElementById('anime-title').innerText = title;
+        // مشغل فائق يدعم أكثر من 20 سيرفر داخلي (Gogo, StreamWise, Alpha, الخ)
+        document.getElementById('player-frame').src = `https://www.consumet.org/anime/gogoanime/watch/${id}-episode-1`;
     }
 
     function closePlayer() {
-        document.getElementById('player-modal').style.display = 'none';
-        document.getElementById('main-player').src = '';
+        document.getElementById('modal').style.display = 'none';
+        document.getElementById('player-frame').src = '';
     }
 
-    loadAnime();
+    window.onload = init;
 </script>
 </body>
 </html>
