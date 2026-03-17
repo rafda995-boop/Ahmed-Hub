@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Taraf Anime - No Ads</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root { --main-color: #ff5a00; --bg-color: #121212; }
+        body { background-color: var(--bg-color); color: white; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 0; }
+        header { background: #1f1f1f; padding: 20px; text-align: center; border-bottom: 3px solid var(--main-color); }
+        .container { padding: 20px; display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 15px; }
+        .anime-card { background: #252525; border-radius: 10px; overflow: hidden; transition: 0.3s; cursor: pointer; border: 1px solid #333; }
+        .anime-card:hover { transform: scale(1.05); border-color: var(--main-color); }
+        .anime-card img { width: 100%; height: 220px; object-fit: cover; }
+        .anime-card h3 { font-size: 14px; padding: 10px; margin: 0; text-align: center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        #player-container { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 1000; text-align: center; }
+        iframe { width: 90%; height: 70%; margin-top: 50px; border: 2px solid var(--main-color); border-radius: 10px; }
+        .close-btn { position: absolute; top: 20px; right: 20px; font-size: 30px; color: white; cursor: pointer; }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1><i class="fas fa-play-circle"></i> Taraf Anime Hub</h1>
+    <p>مشاهدة مباشرة بدون إعلانات</p>
+</header>
+
+<div class="container" id="anime-list">
+    <p>جاري تحميل أحدث الحلقات...</p>
+</div>
+
+<div id="player-container">
+    <span class="close-btn" onclick="closePlayer()">&times;</span>
+    <iframe id="video-player" src="" frameborder="0" allowfullscreen></iframe>
+</div>
+
+<script>
+    // هذا الجزء هو "المحرك" الذي يسحب البيانات
+    // سنستخدم API مجاني لجلب الأنمي (كمثال)
+    async function fetchAnime() {
+        try {
+            const response = await fetch('https://api.consumet.org/anime/gogoanime/recent-episodes');
+            const data = await response.json();
+            const list = document.getElementById('anime-list');
+            list.innerHTML = '';
+
+            data.results.forEach(anime => {
+                const card = document.createElement('div');
+                card.className = 'anime-card';
+                card.onclick = () => playAnime(anime.id);
+                card.innerHTML = `
+                    <img src="${anime.image}" alt="${anime.title}">
+                    <h3>${anime.title}</h3>
+                `;
+                list.appendChild(card);
+            });
+        } catch (error) {
+            document.getElementById('anime-list').innerHTML = '<p>خطأ في الاتصال بالسيرفر، حاول مجدداً.</p>';
+        }
+    }
+
+    function playAnime(id) {
+        // هنا نقوم بفتح مشغل الفيديو الخاص بالأنمي المختار
+        document.getElementById('player-container').style.display = 'block';
+        document.getElementById('video-player').src = `https://www.consumet.org/anime/gogoanime/watch/${id}-episode-1`;
+    }
+
+    function closePlayer() {
+        document.getElementById('player-container').style.display = 'none';
+        document.getElementById('video-player').src = '';
+    }
+
+    fetchAnime();
+</script>
+
+</body>
+</html>
+
