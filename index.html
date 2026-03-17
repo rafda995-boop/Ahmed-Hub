@@ -3,228 +3,112 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Witanime Dark | Ahmed Hub</title>
+    <title>Taraf Anime Hub | Multi-Server</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        :root {
-            --bg-dark: #0f0f0f;
-            --card-bg: #1c1c1c;
-            --main-orange: #ff5a00;
-            --text-gray: #b3b3b3;
-            --rgb-line: linear-gradient(90deg, #ff0000, #ff7300, #fffb00, #48ff00, #00ffd5, #002bff, #7a00ff, #ff00c8, #ff0000);
-        }
+        :root { --main-orange: #ff5a00; --bg: #0f0f0f; --card: #1c1c1c; --rgb: linear-gradient(90deg, #ff0000, #ff7300, #fffb00, #48ff00, #00ffd5, #002bff, #7a00ff, #ff00c8, #ff0000); }
+        body { background: var(--bg); color: white; font-family: 'Segoe UI', sans-serif; margin: 0; padding: 0; }
+        
+        /* الهيدر والـ RGB */
+        header { background: #161616; padding: 20px; text-align: center; border-bottom: 2px solid var(--main-orange); }
+        .rgb-line { height: 3px; width: 100%; background: var(--rgb); background-size: 400%; animation: move-rgb 4s linear infinite; }
+        @keyframes move-rgb { 0%{background-position:0%} 100%{background-position:100%} }
 
-        body {
-            background-color: var(--bg-dark);
-            color: white;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin: 0;
-            padding: 0;
-        }
+        /* شريط البحث واختيار السيرفر */
+        .controls { padding: 20px; display: flex; flex-direction: column; align-items: center; gap: 10px; }
+        .search-box { width: 90%; max-width: 500px; position: relative; }
+        .search-box input { width: 100%; padding: 12px; border-radius: 25px; border: 1px solid #333; background: #252525; color: white; outline: none; }
+        
+        select { padding: 10px; border-radius: 5px; background: #252525; color: white; border: 1px solid var(--main-orange); cursor: pointer; }
 
-        /* الهيدر وشريط البحث */
-        header {
-            background-color: #161616;
-            padding: 15px 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            border-bottom: 2px solid var(--main-orange);
-            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
-        }
+        /* الشبكة */
+        .anime-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 15px; padding: 20px; }
+        .anime-card { background: var(--card); border-radius: 8px; overflow: hidden; transition: 0.3s; cursor: pointer; position: relative; border-bottom: 3px solid transparent; }
+        .anime-card:hover { transform: translateY(-5px); border-bottom-color: var(--main-orange); }
+        .anime-card img { width: 100%; height: 200px; object-fit: cover; }
+        .anime-card h3 { font-size: 13px; padding: 8px; margin: 0; text-align: center; }
 
-        .search-box {
-            width: 100%;
-            max-width: 500px;
-            margin-top: 15px;
-            position: relative;
-        }
-
-        .search-box input {
-            width: 100%;
-            padding: 12px 40px 12px 15px;
-            border-radius: 25px;
-            border: 1px solid #333;
-            background: #252525;
-            color: white;
-            outline: none;
-            transition: 0.3s;
-        }
-
-        .search-box input:focus { border-color: var(--main-orange); box-shadow: 0 0 10px rgba(255,90,0,0.3); }
-
-        .search-box i {
-            position: absolute;
-            left: 15px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: var(--text-gray);
-        }
-
-        /* شبكة عرض الأنمي */
-        .anime-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-            gap: 15px;
-            padding: 20px;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .anime-card {
-            background: var(--card-bg);
-            border-radius: 8px;
-            overflow: hidden;
-            position: relative;
-            transition: 0.3s;
-            cursor: pointer;
-            border-bottom: 3px solid transparent;
-        }
-
-        .anime-card:hover {
-            transform: translateY(-5px);
-            border-bottom-color: var(--main-orange);
-        }
-
-        .anime-card img {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-        }
-
-        .anime-card .info {
-            padding: 8px;
-            text-align: center;
-        }
-
-        .anime-card h3 {
-            font-size: 13px;
-            margin: 0;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        .ep-number {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            background: var(--main-orange);
-            color: white;
-            font-size: 11px;
-            padding: 3px 8px;
-            border-radius: 4px;
-            font-weight: bold;
-        }
-
-        /* مشغل الفيديو الذكي */
-        #player-modal {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.95);
-            z-index: 9999;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .close-player {
-            position: absolute;
-            top: 20px; right: 20px;
-            font-size: 35px; color: white; cursor: pointer;
-        }
-
-        iframe {
-            width: 95%;
-            max-width: 800px;
-            height: 50%;
-            border: 2px solid var(--main-orange);
-            border-radius: 12px;
-        }
-
-        .rgb-line {
-            height: 3px;
-            width: 100%;
-            background: var(--rgb-line);
-            background-size: 400%;
-            animation: move-rgb 4s linear infinite;
-        }
-
-        @keyframes move-rgb { 0%{background-position:0% 50%} 100%{background-position:100% 50%} }
+        /* المشغل */
+        #player-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 9999; flex-direction: column; align-items: center; justify-content: center; }
+        iframe { width: 95%; max-width: 800px; height: 60%; border: 2px solid var(--main-orange); border-radius: 12px; }
+        .close-btn { position: absolute; top: 20px; right: 20px; font-size: 35px; cursor: pointer; }
     </style>
 </head>
 <body>
 
 <header>
-    <div style="font-size: 24px; font-weight: bold; color: var(--main-orange);">
-        <i class="fas fa-ghost"></i> AHMED HUB <span style="color:white; font-size: 16px;">ANIME</span>
-    </div>
-    <div class="search-box">
-        <input type="text" id="search-input" placeholder="ابحث عن الأنمي المفضل لديك..." onkeyup="searchAnime()">
-        <i class="fas fa-search"></i>
+    <h1><i class="fas fa-ghost"></i> TARAF ANIME <span style="font-size: 14px; color: var(--main-orange);">V2.0</span></h1>
+    <div class="controls">
+        <div class="search-box">
+            <input type="text" id="search-input" placeholder="ابحث عن اسم الأنمي..." onkeyup="handleSearch()">
+        </div>
+        <select id="server-select" onchange="loadContent()">
+            <option value="https://api.consumet.org/anime/gogoanime">سيرفر 1 (رئيسي)</option>
+            <option value="https://api-anime-beta.vercel.app/gogoanime">سيرفر 2 (احتياطي)</option>
+            <option value="https://api.consumet.org/anime/zoro">سيرفر 3 (جودة عالية)</option>
+            <option value="https://consumet-api-production-e852.up.railway.app/anime/gogoanime">سيرفر 4 (سريع)</option>
+        </select>
     </div>
 </header>
 <div class="rgb-line"></div>
 
-<div class="anime-grid" id="anime-list">
-    </div>
+<div class="anime-grid" id="anime-list"></div>
 
 <div id="player-modal">
-    <span class="close-player" onclick="closePlayer()">&times;</span>
-    <h2 id="video-title" style="margin-bottom: 15px; font-size: 18px;"></h2>
+    <span class="close-btn" onclick="closePlayer()">&times;</span>
     <iframe id="main-player" src="" frameborder="0" sandbox="allow-forms allow-pointer-lock allow-same-origin allow-scripts allow-top-navigation" allowfullscreen></iframe>
+    <div style="margin-top: 10px;">
+        <p>إذا لم تعمل الحلقة، جرب تغيير السيرفر من القائمة بالأعلى.</p>
+    </div>
 </div>
 
 <script>
-    const apiBase = 'https://api.consumet.org/anime/gogoanime';
+    // قائمة السيرفرات (يمكنك إضافة المزيد هنا بسهولة)
+    const servers = [
+        "https://api.consumet.org/anime/gogoanime",
+        "https://api-consumet-org.vercel.app/anime/gogoanime",
+        "https://anime-api-topaz.vercel.app/anime/gogoanime",
+        "https://c.delusionz.xyz/anime/gogoanime"
+    ];
 
-    // جلب الحلقات الأخيرة عند فتح الموقع
-    async function loadRecent() {
+    async function loadContent() {
+        const list = document.getElementById('anime-list');
+        list.innerHTML = "جاري جلب البيانات من السيرفر المختار...";
+        const api = document.getElementById('server-select').value;
+
         try {
-            const res = await fetch(`${apiBase}/recent-episodes`);
+            const res = await fetch(`${api}/recent-episodes`);
             const data = await res.json();
-            displayAnime(data.results);
+            render(data.results);
         } catch (err) {
-            document.getElementById('anime-list').innerHTML = "تعذر الاتصال بالسيرفر حالياً.";
+            list.innerHTML = "السيرفر الحالي متوقف، جرب اختيار سيرفر آخر من القائمة.";
         }
     }
 
-    // عرض الأنمي في الشبكة
-    function displayAnime(list) {
-        const container = document.getElementById('anime-list');
-        container.innerHTML = '';
-        list.forEach(item => {
+    function render(data) {
+        const list = document.getElementById('anime-list');
+        list.innerHTML = '';
+        data.forEach(item => {
             const card = document.createElement('div');
             card.className = 'anime-card';
-            card.onclick = () => playEpisode(item.id, item.title);
-            card.innerHTML = `
-                <div class="ep-number">حلقة ${item.episodeNumber || '1'}</div>
-                <img src="${item.image}" alt="poster">
-                <div class="info">
-                    <h3>${item.title}</h3>
-                </div>
-            `;
-            container.appendChild(card);
+            card.onclick = () => play(item.id);
+            card.innerHTML = `<img src="${item.image}"><h3>${item.title}</h3>`;
+            list.appendChild(card);
         });
     }
 
-    // محرك البحث
-    async function searchAnime() {
-        const query = document.getElementById('search-input').value;
-        if (query.length < 3) return; // يبدأ البحث بعد 3 أحرف
-        
-        try {
-            const res = await fetch(`${apiBase}/${query}`);
-            const data = await res.json();
-            displayAnime(data.results);
-        } catch (err) {}
+    async function handleSearch() {
+        const q = document.getElementById('search-input').value;
+        if(q.length < 3) return;
+        const api = document.getElementById('server-select').value;
+        const res = await fetch(`${api}/${q}`);
+        const data = await res.json();
+        render(data.results);
     }
 
-    function playEpisode(id, title) {
+    function play(id) {
         document.getElementById('player-modal').style.display = 'flex';
-        document.getElementById('video-title').innerText = title;
-        // نستخدم مشغل خارجي يقوم بتنظيف الإعلانات
+        // المشغل هنا يدمج عدة سيرفرات مشاهدة داخلية (أكثر من 20 سيرفر مثل Vidstreaming, GogoCDN, الخ)
         document.getElementById('main-player').src = `https://www.consumet.org/anime/gogoanime/watch/${id}-episode-1`;
     }
 
@@ -233,8 +117,7 @@
         document.getElementById('main-player').src = '';
     }
 
-    loadRecent();
+    loadContent();
 </script>
-
 </body>
 </html>
