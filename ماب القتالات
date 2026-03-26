@@ -1,0 +1,24 @@
+-- BaeMinh Hub: Frozen Version (No Updates)
+local fileName = "BaeMinh_Static_148100.lua"
+local originalUrl = "https://rawscripts.net/raw/The-Strongest-Battlegrounds-BaeMinh-Hub-148100"
+
+-- التحقق إذا كان السكربت محفوظاً مسبقاً في جهازك
+if not isfile(fileName) then
+    -- إذا لم يكن محفوظاً، سيقوم بجلب النسخة الحالية وحفظها "مرة واحدة فقط"
+    local success, source = pcall(function() 
+        return game:HttpGet(originalUrl) 
+    end)
+    
+    if success and source then
+        writefile(fileName, source)
+        print("Done! The script has been frozen on your device.")
+    else
+        -- إذا فشل الجلب (بسبب الرابط)، سيحاول تشغيل الرابط مباشرة كحل أخير
+        loadstring(game:HttpGet(originalUrl))()
+        return
+    end
+end
+
+-- تشغيل النسخة المحفوظة في جهازك (لن تتأثر بتحديثات المطور بعد الآن)
+local frozenScript = readfile(fileName)
+loadstring(frozenScript)()
